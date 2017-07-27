@@ -1,5 +1,6 @@
 package com.auth.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,13 @@ import com.auth.repositories.ClientRepository;
 @RestController
 @RequestMapping("/api/v1/ebank/account")
 public class AccountController {
-	
-	
+
 	@Autowired
 	private ClientRepository clientRepo;
-	
-	
+
 	@Autowired
 	private AccountRepository accountRepo;
-	
-		
+
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<?> getAccountsById(@PathVariable Integer id) {
 		try {
@@ -41,24 +39,32 @@ public class AccountController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+//	OVO OVDE DOLE 
 
-	@RequestMapping(method = RequestMethod.POST, value = "/{id}", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.PUT, value = "/{clientId}", consumes = "application/json")
 	public ResponseEntity<?> createAccount(@RequestBody AccountEntity account,
-										  @PathVariable Integer id) {
+										   @PathVariable Integer clientId) {
 		try {
-			ClientEntity client = clientRepo.findOne(id);
-			List<AccountEntity> accounts = client.getAccounts();
-			accounts.add(account);
-			client.setAccounts(accounts);
+			ClientEntity client = clientRepo.findOne(clientId);
+			account.setClient(client);
 			accountRepo.save(account);
 			return new ResponseEntity<AccountEntity>(account, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
-	
-	
 
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}", consumes = "application/json")
+	public ResponseEntity<?> deleteClient(@PathVariable Integer id) {
+		try {
+			AccountEntity account = accountRepo.findOne(id);
+			ClientEntity client = account.getClient();
+			account.setClient(null);
+			return new ResponseEntity<AccountEntity>(account, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

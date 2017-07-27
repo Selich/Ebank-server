@@ -15,10 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "client")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ClientEntity {
 	
 	@Id
@@ -40,9 +41,10 @@ public class ClientEntity {
 	@JoinColumn(name = "address")
 	private AddressEntity address;
 
-	@JsonIgnore
+
+	@JsonIgnoreProperties("client")
 	@OneToMany(mappedBy = "client",
-			   cascade  = CascadeType.REFRESH,
+			   cascade  = CascadeType.ALL,
 			   fetch    = FetchType.LAZY)
 	private List<AccountEntity> accounts = new ArrayList<>();
 

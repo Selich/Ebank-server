@@ -13,9 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "bank")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BankEntity {
 	
 	
@@ -26,6 +28,7 @@ public class BankEntity {
 	@Column(name = "bank_name")
 	private String bankName;
 
+	@JsonIgnoreProperties("bank")
 	@JsonIgnore
 	@OneToMany(mappedBy = "bank", fetch = FetchType.LAZY, cascade= { CascadeType.REFRESH})
 	private List<AccountEntity> accounts = new ArrayList<>();
