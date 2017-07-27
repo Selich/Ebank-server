@@ -10,10 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "transaction")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class TransactionEntity {
 
 	@Id
@@ -25,9 +26,10 @@ public class TransactionEntity {
 	@JoinColumn(name = "senderAccount")
 	private AccountEntity senderAccount;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "receiverAccount")
-	private AccountEntity receiverAccount;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "receiverAccount")
+	@Column(name = "receiver_account")
+	private String receiverAccount;
 
 	@Column(name = "sender_desc")
 	private String senderDescription;
@@ -35,7 +37,7 @@ public class TransactionEntity {
 	@Column(name = "payment_code")
 	private String paymentCode;
 
-	 @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	 @JoinColumn(name = "currency")
 	 private CurrencyEntity currency;
 
@@ -55,20 +57,6 @@ public class TransactionEntity {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-
-	public CurrencyEntity getCurrency() {
-		return currency;
-	}
-
-
-
-	public void setCurrency(CurrencyEntity currency) {
-		this.currency = currency;
-	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -86,11 +74,13 @@ public class TransactionEntity {
 		this.senderAccount = senderAccount;
 	}
 
-	public AccountEntity getReceiverAccount() {
+
+
+	public String getReceiverAccount() {
 		return receiverAccount;
 	}
 
-	public void setReceiverAccount(AccountEntity receiverAccount) {
+	public void setReceiverAccount(String receiverAccount) {
 		this.receiverAccount = receiverAccount;
 	}
 
@@ -108,6 +98,14 @@ public class TransactionEntity {
 
 	public void setPaymentCode(String paymentCode) {
 		this.paymentCode = paymentCode;
+	}
+
+	public CurrencyEntity getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(CurrencyEntity currency) {
+		this.currency = currency;
 	}
 
 	public Double getValue() {
@@ -141,5 +139,6 @@ public class TransactionEntity {
 	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
-
+	
+	
 }

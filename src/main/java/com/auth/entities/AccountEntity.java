@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "account")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class AccountEntity {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -32,111 +32,53 @@ public class AccountEntity {
 	private Double accountBalance;
 	@Column(name = "available_balance")
 	private Double availableBalance;
-	
-	@ManyToOne(cascade = CascadeType.ALL, 
-	fetch = FetchType.EAGER)
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "client")
 	private ClientEntity client;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "bank")
 	private BankEntity bank;
-//	
-
+	//
 	@JsonIgnore
-	@OneToMany(mappedBy = "senderAccount", fetch = FetchType.LAZY, cascade= { CascadeType.ALL})
+	@JsonIgnoreProperties("senderAccount")
+	@OneToMany(mappedBy = "senderAccount",
+			   cascade  = CascadeType.ALL,
+			   fetch    = FetchType.LAZY)
 	private List<TransactionEntity> sendingTransaction = new ArrayList<>();
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "receiverAccount", fetch = FetchType.LAZY, cascade= { CascadeType.ALL})
-	private List<TransactionEntity> receivingTransaction = new ArrayList<>();
-	
 
-//	@JsonBackReference
-//	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade= { CascadeType.ALL})
-//	private List<TransactionEntity> transactions = new ArrayList<>();
-	
-	
 	public AccountEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 
 	}
-	
-	
-	
-	
-
-	public List<TransactionEntity> getSendingTransaction() {
-		return sendingTransaction;
-	}
-
-
-
-
-
-
-	public void setSendingTransaction(List<TransactionEntity> sendingTransaction) {
-		this.sendingTransaction = sendingTransaction;
-	}
-
-
-
-
-
-
-	public List<TransactionEntity> getReceivingTransaction() {
-		return receivingTransaction;
-	}
-
-
-
-
-
-	public void setReceivingTransaction(List<TransactionEntity> receivingTransaction) {
-		this.receivingTransaction = receivingTransaction;
-	}
-
-
-
-
-
-	public BankEntity getBank() {
-		return bank;
-	}
-
-
-
-	public void setBank(BankEntity bank) {
-		this.bank = bank;
-	}
-
 
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getAccountNumber() {
 		return accountNumber;
 	}
 
+
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-	
 
 	public Double getAccountBalance() {
 		return accountBalance;
 	}
-
-
-
 
 
 	public void setAccountBalance(Double accountBalance) {
@@ -144,15 +86,9 @@ public class AccountEntity {
 	}
 
 
-
-
-
 	public Double getAvailableBalance() {
 		return availableBalance;
 	}
-
-
-
 
 
 	public void setAvailableBalance(Double availableBalance) {
@@ -160,17 +96,36 @@ public class AccountEntity {
 	}
 
 
-
-
-
 	public ClientEntity getClient() {
 		return client;
 	}
+
 
 	public void setClient(ClientEntity client) {
 		this.client = client;
 	}
 
+
+	public BankEntity getBank() {
+		return bank;
+	}
+
+
+	public void setBank(BankEntity bank) {
+		this.bank = bank;
+	}
+
+
+	public List<TransactionEntity> getSendingTransaction() {
+		return sendingTransaction;
+	}
+
+
+	public void setSendingTransaction(List<TransactionEntity> sendingTransaction) {
+		this.sendingTransaction = sendingTransaction;
+	}
+	
+	
 
 
 }

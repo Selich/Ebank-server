@@ -61,7 +61,7 @@ public class AccountController {
 		try {
 			AccountEntity account = accountRepo.findOne(id);
 			ClientEntity client = account.getClient();
-			account.setClient(null);
+			client.getAccounts().remove(account);
 			return new ResponseEntity<AccountEntity>(account, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

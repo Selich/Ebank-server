@@ -75,7 +75,7 @@ public class ClientController {
 			currentClient.setAddress(client.getAddress());
 			currentClient.setJmbg(client.getJmbg());
 			currentClient.setEmail(client.getEmail());
-			currentClient.setAccounts(client.getAccounts());
+			currentClient.setPassword(client.getPassword());
 			clientRepo.save(currentClient);
 			return new ResponseEntity<ClientEntity>(currentClient, HttpStatus.OK);
 		} catch (Exception e) {
