@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "bank")
@@ -26,9 +26,9 @@ public class BankEntity {
 	@Column(name = "bank_name")
 	private String bankName;
 
-//	@JsonBackReference
-//	@OneToMany(mappedBy = "bank", fetch = FetchType.LAZY, cascade= { CascadeType.ALL})
-//	private List<AccountEntity> accounts = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "bank", fetch = FetchType.LAZY, cascade= { CascadeType.REFRESH})
+	private List<AccountEntity> accounts = new ArrayList<>();
 	
 
 	public BankEntity() {
@@ -52,13 +52,13 @@ public class BankEntity {
 		this.bankName = bankName;
 	}
 
-//	public List<AccountEntity> getAccounts() {
-//		return accounts;
-//	}
-//
-//	public void setAccounts(List<AccountEntity> accounts) {
-//		this.accounts = accounts;
-//	}
+	public List<AccountEntity> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<AccountEntity> accounts) {
+		this.accounts = accounts;
+	}
 	
 	
 	

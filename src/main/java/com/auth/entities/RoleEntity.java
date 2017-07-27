@@ -8,33 +8,42 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "role")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RoleEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	@Column(name = "role_id")
 	private Integer id;
 
 	@Column(name = "role_name")
 	private String name;
 
-//	@JsonBackReference
-//	@OneToMany(mappedBy = "role", fetch = FetchType.EAGER, cascade= { CascadeType.ALL})
-//	private List<ClientEntity> clients = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "role",
+			   cascade  = CascadeType.REFRESH,
+			   fetch    = FetchType.LAZY)
+	private List<ClientEntity> clients = new ArrayList<>();
+	
+	@Version
+	private Integer version;
 //
 	public RoleEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -52,13 +61,13 @@ public class RoleEntity {
 		this.name = name;
 	}
 
-//	public List<ClientEntity> getClients() {
-//		return clients;
-//	}
-//
-//	public void setClients(List<ClientEntity> clients) {
-//		this.clients = clients;
-//	}
+	public List<ClientEntity> getClients() {
+		return clients;
+	}
+
+	public void setClients(List<ClientEntity> clients) {
+		this.clients = clients;
+	}
 
 	
 

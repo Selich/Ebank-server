@@ -32,24 +32,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 //	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and()
+		http.csrf().disable().authorizeRequests().
+		anyRequest().authenticated().and()
 		.httpBasic().authenticationEntryPoint(authEntryPoint);
 		
 	}
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("api/v1/ebank/auth/login")
+		web.ignoring().antMatchers("/api/v1/ebank/auth/login")
 		.and().ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 	}
 	
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//		auth.jdbcAuthentication().usersByUsernameQuery(clientsQuery)
-//								 .authoritiesByUsernameQuery(rolesQuery)
-////								 .passwordEncoder(passwordEncoder())
-//								 .dataSource(dataSource);
-		auth.inMemoryAuthentication().withUser("testuser")
-		.password("testpass").roles("admin");
+		auth.jdbcAuthentication().usersByUsernameQuery(clientsQuery)
+								 .authoritiesByUsernameQuery(rolesQuery)
+//								 .passwordEncoder(passwordEncoder())
+								 .dataSource(dataSource);
 		
 	}
 	

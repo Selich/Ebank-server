@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class CurrencyEntity {
@@ -24,20 +24,29 @@ public class CurrencyEntity {
 	@Column(name = "currency_symbol")
 	private String currencySymbol;
 	@Column(name = "worth_for")
-	private String worthFor;
+	private Integer worthFor;
 	@Column(name = "buying_rate")
-	private String buyingRate;
+	private Double buyingRate;
 	@Column(name = "selling_rate")
-	private String sellingRate;
+	private Double sellingRate;
 	
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "currency", fetch = FetchType.LAZY, cascade= { CascadeType.ALL})
 	private List<TransactionEntity> transactions = new ArrayList<>();
 	public CurrencyEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public List<TransactionEntity> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<TransactionEntity> transactions) {
+		this.transactions = transactions;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -56,23 +65,29 @@ public class CurrencyEntity {
 	public void setCurrencySymbol(String currencySymbol) {
 		this.currencySymbol = currencySymbol;
 	}
-	public String getBuyingRate() {
-		return buyingRate;
-	}
-	public void setBuyingRate(String buyingRate) {
-		this.buyingRate = buyingRate;
-	}
-	public String getSellingRate() {
-		return sellingRate;
-	}
-	public void setSellingRate(String sellingRate) {
-		this.sellingRate = sellingRate;
-	}
-	public String getWorthFor() {
+
+	public Integer getWorthFor() {
 		return worthFor;
 	}
-	public void setWorthFor(String worthFor) {
+
+	public void setWorthFor(Integer worthFor) {
 		this.worthFor = worthFor;
+	}
+
+	public Double getBuyingRate() {
+		return buyingRate;
+	}
+
+	public void setBuyingRate(Double buyingRate) {
+		this.buyingRate = buyingRate;
+	}
+
+	public Double getSellingRate() {
+		return sellingRate;
+	}
+
+	public void setSellingRate(Double sellingRate) {
+		this.sellingRate = sellingRate;
 	}
 	
 	

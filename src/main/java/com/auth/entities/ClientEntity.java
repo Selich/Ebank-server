@@ -46,11 +46,34 @@ public class ClientEntity {
 			   fetch    = FetchType.LAZY)
 	private List<AccountEntity> accounts = new ArrayList<>();
 
+	@ManyToOne(cascade = CascadeType.ALL,
+			   fetch   = FetchType.LAZY)
+	@JoinColumn(name = "role")
+	private RoleEntity role;
 
 	public ClientEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+
+
+	public RoleEntity getRole() {
+		return role;
+	}
+
+
+
+
+
+	public void setRole(RoleEntity role) {
+		this.role = role;
+	}
+
+
+
 
 
 	public Integer getId() {

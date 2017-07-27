@@ -1,19 +1,18 @@
 package com.auth.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.entities.ClientEntity;
-import com.auth.entities.RoleEntity;
 import com.auth.repositories.ClientRepository;
 
 @CrossOrigin
@@ -36,10 +35,10 @@ public class ClientController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<?> getClientById() {
+	public ResponseEntity<?> getClientById(@PathVariable Integer id) {
 		try {
-			List<ClientEntity> clients = clientRepo.findAll();
-			return new ResponseEntity<List<ClientEntity>>(clients, HttpStatus.OK);
+			ClientEntity client = clientRepo.findOne(id);
+			return new ResponseEntity<ClientEntity>(client, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -55,4 +54,32 @@ public class ClientController {
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}", consumes = "application/json")
+	public ResponseEntity<?> deleteClient(@PathVariable Integer id) {
+		try {
+			ClientEntity client = clientRepo.findOne(id);
+			clientRepo.delete(client);
+			return new ResponseEntity<ClientEntity>(client, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}", consumes = "application/json")
+	public ResponseEntity<?> updateClient(@PathVariable Integer id, @RequestBody ClientEntity client) {
+		try {
+			ClientEntity currentClient = clientRepo.findOne(id);
+			currentClient.setFirstName(client.getFirstName());
+			currentClient.setLastName(client.getLastName());
+			currentClient.setAddress(client.getAddress());
+			currentClient.setJmbg(client.getJmbg());
+			currentClient.setEmail(client.getEmail());
+			currentClient.setAccounts(client.getAccounts());
+			clientRepo.save(currentClient);
+			return new ResponseEntity<ClientEntity>(currentClient, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
