@@ -13,4 +13,6 @@ public interface ClientRepository extends CrudRepository<ClientEntity, Integer>{
 	List<ClientEntity> findAll();
 	
 	ClientEntity findByEmailAndPassword(String email, String password);
+	ClientEntity findByEmail(String email);
+	ClientEntity findByJmbg(String jmbg);
 }
