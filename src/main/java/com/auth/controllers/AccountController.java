@@ -60,8 +60,12 @@ public class AccountController {
 	public ResponseEntity<?> deleteClient(@PathVariable Integer id) {
 		try {
 			AccountEntity account = accountRepo.findOne(id);
-			ClientEntity client = account.getClient();
-			client.getAccounts().remove(account);
+			account.setClient(null);
+//			List<AccountEntity> accounts = client.getAccounts();
+//			accounts.remove(account);
+//			client.setAccounts(accounts);
+//			clientRepo.save(client);
+			accountRepo.save(account);
 			return new ResponseEntity<AccountEntity>(account, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

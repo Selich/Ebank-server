@@ -22,7 +22,10 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepo;
-
+	
+//	@Autowired
+//	private Encryption encryption;
+	
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
 	public ResponseEntity<?> getClients() {
@@ -47,6 +50,9 @@ public class ClientController {
 	@RequestMapping(method = RequestMethod.POST, value = "/create", consumes = "application/json")
 	public ResponseEntity<?> createClient(@RequestBody ClientEntity client) {
 		try {
+//			String oldPass = client.getPassword();
+//			String newPass = encryption.getPassEncoded(oldPass);
+//			client.setPassword(newPass);
 			clientRepo.save(client);
 			return new ResponseEntity<ClientEntity>(client, HttpStatus.OK);
 		} catch (Exception e) {

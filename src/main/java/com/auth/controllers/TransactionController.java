@@ -1,6 +1,7 @@
 package com.auth.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class TransactionController {
 			if ( oldSenderBalance - value < 0 || oldReceiverBalance + value > receiver.getAvailableBalance() ){
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			} else {
+				transaction.setTransactionDate(new Date());
 				Double newSenderBalance = oldSenderBalance - (value / worthFor * buyingRate);
 				Double newReceiverBalance = oldReceiverBalance + (value / worthFor * buyingRate);
 			
@@ -88,6 +90,26 @@ public class TransactionController {
 				transactions.addAll(account.getSendingTransaction());
 			}
 			return new ResponseEntity<List<TransactionEntity>>(transactions, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@RequestMapping(method = RequestMethod.POST, value = "/account")
+	public ResponseEntity<?> getTransactionsByClient(@RequestBody String accountNumber) {
+		try {
+			List<TransactionEntity> transactions = new ArrayList<>();
+			AccountEntity senderAccount = accountRepo.findAccountByAccountNumber(accountNumber);
+			AccountEntity receiverAccount = accountRepo.findAccountByAccountNumber(accountNumber);
+			List<TransactionEntity> receivingTransactions = transactionRepo.findTransactionsByReceiverAccount(accountNumber);
+
+			List<TransactionEntity> senderTransactions = transactionRepo.findTransactionsByReceiverAccount(senderAccount.getAccountNumber());
+//			
+//			transaction = 
+//
+//
+//			}
+			return new ResponseEntity<List<TransactionEntity>>(senderTransactions, HttpStatus.OK);
+//			return new ResponseEntity<AccountEntity>(account, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

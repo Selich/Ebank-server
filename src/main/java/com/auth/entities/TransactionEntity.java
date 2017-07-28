@@ -1,5 +1,7 @@
 package com.auth.entities;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -50,8 +53,12 @@ public class TransactionEntity {
 	@Column(name = "referenceNumber")
 	private String referenceNumber;
 
+	@JsonFormat(
+			shape = JsonFormat.Shape.STRING,
+			pattern = "dd-MM-yyyy hh:mm:ss"
+	)
 	@Column(name = "transaction_date")
-	private String transactionDate;
+	private Date transactionDate;
 
 	public TransactionEntity() {
 		super();
@@ -75,6 +82,14 @@ public class TransactionEntity {
 	}
 
 
+
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
 
 	public String getReceiverAccount() {
 		return receiverAccount;
@@ -132,13 +147,5 @@ public class TransactionEntity {
 		this.referenceNumber = referenceNumber;
 	}
 
-	public String getTransactionDate() {
-		return transactionDate;
-	}
-
-	public void setTransactionDate(String transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-	
 	
 }

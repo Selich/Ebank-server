@@ -1,19 +1,20 @@
 package com.auth.util;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
+
+//@Configuration
 public class Encryption {
 	
-	public static String getPassEncoded(String pass) {
-		BCryptPasswordEncoder bCryptPasswordEncoder =
-				new BCryptPasswordEncoder();
-		
-		return bCryptPasswordEncoder.encode(pass);
-	}
+//	@Bean
+//	public static String getPassEncoded(String pass) {
+//		BCryptPasswordEncoder bCryptPasswordEncoder =
+//				new BCryptPasswordEncoder();
+//		return bCryptPasswordEncoder.encode(pass);
+//	}
 	
-	public static void main(String[] args){
-//		add your own pass
-		System.out.println(getPassEncoded("pass"));
-	}
 
 }
