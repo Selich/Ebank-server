@@ -64,11 +64,24 @@ public class TransactionController {
 				Double newSenderBalance = oldSenderBalance - (value / worthFor * buyingRate);
 				Double newReceiverBalance = oldReceiverBalance + (value / worthFor * buyingRate);
 
+				TransactionEntity newTransaction = new TransactionEntity();
+				
+				newTransaction.setCurrency(currency);
+				newTransaction.setModel(transaction.getModel());
+				newTransaction.setReferenceNumber(transaction.getReferenceNumber());
+				newTransaction.setPaymentCode(transaction.getPaymentCode());
+				newTransaction.setReceiverAccount(transaction.getReceiverAccount());
+				newTransaction.setSenderDescription(transaction.getSenderDescription());
+				newTransaction.setSenderAccount(transaction.getSenderAccount());
+				newTransaction.setTransactionDate(new Date());
+
 				sender.setAccountBalance(newSenderBalance);
 				receiver.setAccountBalance(newReceiverBalance);
 				accountRepo.save(sender);
 				accountRepo.save(receiver);
-				return new ResponseEntity<AccountEntity>(receiver, HttpStatus.OK);
+				
+				transactionRepo.save(newTransaction);
+				return new ResponseEntity<TransactionEntity>(newTransaction, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
