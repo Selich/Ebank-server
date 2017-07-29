@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.auth.entities.ClientEntity;
 
 @Repository
-public interface ClientRepository extends CrudRepository<ClientEntity, Integer>{
+public interface ClientRepository extends CrudRepository<ClientEntity, Integer> {
 
 	List<ClientEntity> findAll();
-	
-	ClientEntity findByEmailAndPassword(String email, String password);
-	ClientEntity findByEmail(String email);
+
 	ClientEntity findByJmbg(String jmbg);
+
+	ClientEntity findByEmail(String email);
+
+	ClientEntity findByEmailAndPassword(String email, String password);
 }

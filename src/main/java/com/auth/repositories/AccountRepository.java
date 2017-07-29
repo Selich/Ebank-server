@@ -9,12 +9,10 @@ import com.auth.entities.AccountEntity;
 import com.auth.entities.ClientEntity;
 
 @Repository
-public interface AccountRepository extends CrudRepository<AccountEntity, Integer>{
-	
-	
-	AccountEntity findAccountByAccountNumber(String accountNumber);
+public interface AccountRepository extends CrudRepository<AccountEntity, Integer> {
+
 	List<AccountEntity> findByClient(ClientEntity client);
-	
-	
+
+	AccountEntity findAccountByAccountNumber(String accountNumber);
 
 }

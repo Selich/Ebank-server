@@ -40,18 +40,9 @@ public class AccountEntity {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "bank")
 	private BankEntity bank;
-	//
-	@JsonIgnore
-	@JsonIgnoreProperties("senderAccount")
-	@OneToMany(mappedBy = "senderAccount",
-			   cascade  = CascadeType.ALL,
-			   fetch    = FetchType.LAZY)
-	private List<TransactionEntity> sendingTransaction = new ArrayList<>();
-
 
 	public AccountEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 
 	}
 
@@ -114,18 +105,6 @@ public class AccountEntity {
 	public void setBank(BankEntity bank) {
 		this.bank = bank;
 	}
-
-
-	public List<TransactionEntity> getSendingTransaction() {
-		return sendingTransaction;
-	}
-
-
-	public void setSendingTransaction(List<TransactionEntity> sendingTransaction) {
-		this.sendingTransaction = sendingTransaction;
-	}
-	
-	
 
 
 }

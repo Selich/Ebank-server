@@ -11,5 +11,6 @@ import com.auth.entities.CurrencyEntity;
 public interface CurrencyRepository extends CrudRepository<CurrencyEntity, Integer> {
 
 	List<CurrencyEntity> findAll();
-    CurrencyEntity findCurrencyByCurrencySymbol(String currencySymbol);
+
+	CurrencyEntity findCurrencyByCurrencySymbol(String currencySymbol);
 }

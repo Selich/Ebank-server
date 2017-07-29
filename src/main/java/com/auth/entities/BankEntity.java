@@ -28,6 +28,9 @@ public class BankEntity {
 	@Column(name = "bank_name")
 	private String bankName;
 
+	@Column(name = "pib")
+	private String pib;
+
 	@JsonIgnoreProperties("bank")
 	@JsonIgnore
 	@OneToMany(mappedBy = "bank", fetch = FetchType.LAZY, cascade= { CascadeType.REFRESH})

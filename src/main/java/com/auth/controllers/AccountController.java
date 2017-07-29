@@ -1,6 +1,5 @@
 package com.auth.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth.entities.AccountEntity;
 import com.auth.entities.ClientEntity;
 import com.auth.repositories.AccountRepository;
+import com.auth.repositories.BankRepository;
 import com.auth.repositories.ClientRepository;
 
 @CrossOrigin
@@ -28,6 +28,8 @@ public class AccountController {
 
 	@Autowired
 	private AccountRepository accountRepo;
+	@Autowired
+	private BankRepository bankRepo;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<?> getAccountsById(@PathVariable Integer id) {

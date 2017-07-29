@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "role")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class RoleEntity {
 
 	@Id
@@ -30,20 +30,15 @@ public class RoleEntity {
 	private String name;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "role",
-			   cascade  = CascadeType.REFRESH,
-			   fetch    = FetchType.LAZY)
+	@OneToMany(mappedBy = "role", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<ClientEntity> clients = new ArrayList<>();
-	
+
 	@Version
 	private Integer version;
-//
+
 	public RoleEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	public Integer getId() {
 		return id;
@@ -68,8 +63,5 @@ public class RoleEntity {
 	public void setClients(List<ClientEntity> clients) {
 		this.clients = clients;
 	}
-
-	
-
 
 }
